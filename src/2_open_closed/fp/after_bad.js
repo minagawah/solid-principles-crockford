@@ -21,19 +21,17 @@
  */
 const productFactory = (price = 0) => {
   /** @private */
-  let p = price;
+  let _price = price;
 
   /**
-   * Violating OCP because you are
-   * bringing in a breaking change to
-   * `get_price`. Instead, you should
-   * have added a new method.
+   * Why bringing in changes?
+   * You should have added a new method.
    *
    * @type {GetPrice}
    */
   const get_price = (discount = 0) => {
-    p -= discount;
-    return p;
+    _price -= discount;
+    return _price;
   };
 
   return Object.create({ get_price });

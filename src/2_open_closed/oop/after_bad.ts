@@ -10,10 +10,8 @@ class Product {
   }
 
   /**
-   * Violating OCP because you are
-   * bringing in a breaking change to
-   * `getPrice`. Instead, you should
-   * have added a new method.
+   * Why bringing in changes?
+   * You should have added a new method.
    */
   public getPrice(discount: number = 0): number {
     return this.price - discount;

@@ -34,7 +34,9 @@ const COOKIE_DAYS = 90;
  * @returns {CookiesContext<T>}
  */
 const cookiesFactory = name => {
-  /** @type {Save<T>} */
+  /**
+   * @type {Save<T>}
+   */
   const save = data => {
     const d = new Date();
     d.setTime(
@@ -47,7 +49,9 @@ const cookiesFactory = name => {
     ].join('; ');
   };
 
-  /** @type {Fetch<T>} */
+  /**
+   * @type {Fetch<T>}
+   */
   const fetch = () => {
     const match = `${name}=`;
     const arr = document.cookie.split('');

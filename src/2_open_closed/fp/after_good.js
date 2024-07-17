@@ -27,10 +27,10 @@
  */
 const productFactory = (price = 0) => {
   /** @private */
-  let p = price;
+  let _price = price;
 
   /** @type {GetPrice} */
-  const get_price = () => p;
+  const get_price = () => _price;
 
   /**
    * Instead of making a breaking
@@ -40,8 +40,8 @@ const productFactory = (price = 0) => {
    * @type {ApplyDiscount}
    */
   const apply_discount = (discount = 0) => {
-    p -= discount;
-    return p;
+    _price -= discount;
+    return _price;
   };
 
   return Object.create({

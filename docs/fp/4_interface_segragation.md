@@ -1,15 +1,10 @@
 # 2-1. SOLID Principles with FP Examples
 
-- [Top](../../README.md)
-- [OOP (Object Oriented Programming) Examples](../oop/oop.md)
-- [FP (Functional Programming) Examples](./fp.md)
-  - [(1) Single Responsibility Principle (SRP)](1_single_responsibility.md)
-  - [(2) Open-Closed Principle (OCP)](2_open_closed.md)
-  - [(3) Liskov Substitution Principle (LSP)](3_liskov_substitution.md)
-  - [(4) Interface Segragation Principle (ISP)](4_interface_segragation.md)
-  - [(5) Dependency Inversion Principle (DIP)](5_dependency_inversion.md)
-
 ## (4) Interface Segragation Principle (ISP) with FP
+
+Or, see the corresponding [OOP version.](../oop/4_interface_segragation.md)
+
+### ■ Description
 
 You should not implement interfaces that are not used.
 
@@ -19,16 +14,21 @@ Divide your interfaces into smaller modules.
 
 ### ■ Examples
 
+If you are in hurry,
+you can [check out the shorter version.](#good_vs_bad)
+
 #### (a) BEFORE
+
+This is a program about ideal employees.  
+You will describes skills in the program that are  
+required for becoming the best employee in the company.
 
 ##### Assignment
 
-> To represent ideal employees for our company,  
-> they should be able to use Excel.  
-> But, at the same time, some of them should also be able  
-> to use Visual Studio Code as well.
->
-> How would you define 'Employee'?
+> To represent ideal employees for our company, they should  
+> be able to use Excel, but at the same time, some of them should  
+> also be able to use Visual Studio Code as well.  
+> How would you define `Employee` context?
 
 ```js
 const employeeFactory = () => {};
@@ -166,3 +166,116 @@ const developerFactory = () => {
 - [4_interface_segragation/fp/after_good.js](../../src/4_interface_segragation/fp/after_good.js)
   - Or, OOP version:  
 [4_interface_segragation/oop/after_good.ts](../../src/4_interface_segragation/oop/after_good.ts)
+
+<a name="good_vs_bad"></a>
+### ■ GOOD vs BAD
+
+To quickly grasp the idea behind, have a look at this shorter version:
+
+#### BAD
+
+See some of the methods are not in use.
+
+```js
+const employeeFactory = () =>
+  Object.create({
+    // Basic skills
+    use_chopsticks: () => {},
+    eat_chow_mein: () => {},
+
+    // Desired skills
+    use_excel: () => {},
+    use_visual_studio: () => {},
+  })
+
+{
+  const accountant = employeeFactory()
+  accountant.use_excel()
+
+  const developer = employeeFactory()
+  developer.use_visual_studio()
+}
+```
+
+#### GOOD
+
+You should put them in the appropriate contexts.
+
+```js
+const employeeInterface = arg => {
+  const {
+    use_chopsticks,
+    eat_chow_mein
+  } = arg
+
+  return {
+    use_chopsticks,
+    eat_chow_mein
+  }
+};
+
+const accountantInterface = arg => {
+  const { use_excel } = arg;
+  return { use_excel }
+}
+
+const developerInterface = arg => {
+  const { use_visual_studio } = arg;
+  return {
+    use_visual_studio
+  };
+}
+
+const accountantFactory = () => {
+  const employee = employeeInterface({
+    use_chopsticks: () => {},
+    eat_chow_mein: () => {}
+  });
+
+  const accountant = accountantInterface({
+    use_excel: () => {}
+  })
+
+  const proto = {
+    ...employee,
+    ...accountant,
+  }
+
+  return Object.create(proto)
+}
+
+const developerFactory = () => {
+  const employee = employeeInterface({
+    use_chopsticks: () => {},
+    eat_chow_mein: () => {}
+  })
+
+  const developer = developerInterface({
+    use_visual_studio: () => {}
+  })
+
+  return Object.create({
+    ...employee,
+    ...developer,
+  })
+}
+
+{
+  const accountant = accountantFactory()
+  accountant.use_excel()
+
+  const developer = developerFactory()
+  developer.use_visual_studio()
+}
+```
+
+Do you see how they differ?
+
+- [Top](../../README.md)
+- [OOP (Object Oriented Programming) Examples](../oop/index.md)
+- [FP (Functional Programming) Examples](./index.md)
+  - [(1) Single Responsibility Principle (SRP)](1_single_responsibility.md)
+  - [(2) Open-Closed Principle (OCP)](2_open_closed.md)
+  - [(3) Liskov Substitution Principle (LSP)](3_liskov_substitution.md)
+  - [(4) Interface Segragation Principle (ISP)](4_interface_segragation.md)
+  - [(5) Dependency Inversion Principle (DIP)](5_dependency_inversion.md)

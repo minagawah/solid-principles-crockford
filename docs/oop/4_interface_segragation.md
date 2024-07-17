@@ -1,15 +1,10 @@
-# 2-1. SOLID Principles with OOP Examples
-
-- [Top](../../README.md)
-- [OOP (Object Oriented Programming) Examples](./oop.md)
-  - [(1) Single Responsibility Principle (SRP)](1_single_responsibility.md)
-  - [(2) Open-Closed Principle (OCP)](2_open_closed.md)
-  - [(3) Liskov Substitution Principle (LSP)](3_liskov_substitution.md)
-  - [(4) Interface Segragation Principle (ISP)](4_interface_segragation.md)
-  - [(5) Dependency Inversion Principle (DIP)](5_dependency_inversion.md)
-- [FP (Functional Programming) Examples](../fp/fp.md)
+# 2-2. SOLID Principles with OOP Examples
 
 ## (4) Interface Segragation Principle (ISP) with OOP
+
+Or, see the corresponding [FP version.](../fp/4_interface_segragation.md)
+
+### ■ Description
 
 You should not implement interfaces that are not used.
 
@@ -19,7 +14,14 @@ Divide your interfaces into smaller modules.
 
 ### ■ Examples
 
+If you are in hurry,
+you can [check out the shorter version.](#good_vs_bad)
+
 #### (a) BEFORE
+
+This is a program about ideal employees.  
+You will describes skills in the program that are  
+required for becoming the best employee in the company.
 
 ##### Assignment
 
@@ -130,3 +132,68 @@ class Developer implements IEmployee, IDeveloper {
 - [4_interface_segragation/oop/after_good.ts](../../src/4_interface_segragation/oop/after_good.ts)
   - Or, FP version:  
 [4_interface_segragation/fp/after_good.js](../../src/4_interface_segragation/fp/after_good.js)
+
+<a name="good_vs_bad"></a>
+### ■ GOOD vs BAD
+
+To quickly grasp the idea behind, have a look at this shorter version:
+
+#### BAD
+
+See some of the methods are not in use.
+
+```js
+class Employee {
+  // Basic skills
+  public use_chopsticks() {}
+  public cook_chow_mein() {}
+
+  // Desired skills
+  public use_excel() {}
+  public use_visual_studio() {}
+}
+```
+
+#### GOOD
+
+You should put them in the appropriate contexts.
+
+```js
+interface IEmployee {
+  use_chopsticks(): void;
+  cook_chow_mein(): void;
+}
+
+interface IAccountant {
+  use_excel(): void;
+}
+
+interface IDeveloper {
+  use_visual_studio(): void;
+}
+
+class Accountant implements IEmployee, IAccountant {
+  public use_chopsticks() {}
+  public cook_chow_mein() {}
+
+  public use_excel() {}
+}
+
+class Developer implements IEmployee, IDeveloper {
+  public use_chopsticks() {}
+  public cook_chow_mein() {}
+
+  public use_visual_studio() {}
+}
+```
+
+Do you see how they differ?
+
+- [Top](../../README.md)
+- [OOP (Object Oriented Programming) Examples](./index.md)
+  - [(1) Single Responsibility Principle (SRP)](1_single_responsibility.md)
+  - [(2) Open-Closed Principle (OCP)](2_open_closed.md)
+  - [(3) Liskov Substitution Principle (LSP)](3_liskov_substitution.md)
+  - [(4) Interface Segragation Principle (ISP)](4_interface_segragation.md)
+  - [(5) Dependency Inversion Principle (DIP)](5_dependency_inversion.md)
+- [FP (Functional Programming) Examples](../fp/index.md)

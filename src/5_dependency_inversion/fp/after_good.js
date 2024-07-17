@@ -22,6 +22,7 @@ const COOKIE_DAYS = 90;
  * @typedef GenericStorageInterface
  * @type {Object}
  * @property {string} [context]
+ * @property {string} name
  * @property {Save<T>} save
  * @property {Fetch<T>} fetch
  */
@@ -33,9 +34,10 @@ const COOKIE_DAYS = 90;
  * @returns {GenericStorageInterface<U>}
  */
 const genericStorageInterface = storage => {
-  const { save, fetch } = storage;
+  const { name, save, fetch } = storage;
   return {
     context: 'GenericStorageInterface',
+    name,
     save,
     fetch,
   };
@@ -46,7 +48,7 @@ const genericStorageInterface = storage => {
  * @typedef CookiesContext
  * @type {Object}
  * @property {string} context
- * @property {string} cookie_name
+ * @property {string} name
  * @property {Save<T>} save
  * @property {Fetch<T>} fetch
  */
@@ -60,7 +62,9 @@ const genericStorageInterface = storage => {
  * @returns {CookiesContext<T>}
  */
 const cookiesFactory = name => {
-  /** @type {Save<T>} */
+  /**
+   * @type {Save<T>}
+   */
   const save = data => {
     const d = new Date();
     d.setTime(
@@ -73,7 +77,9 @@ const cookiesFactory = name => {
     ].join('; ');
   };
 
-  /** @type {Fetch<T>} */
+  /**
+   * @type {Fetch<T>}
+   */
   const fetch = () => {
     const match = `${name}=`;
     const arr = document.cookie.split('');
@@ -90,12 +96,12 @@ const cookiesFactory = name => {
   };
 
   /*
-   * Instead of the high-level
-   * ('ProfileContext') depends on
-   * the low-level ('CookiesContext'),
+   * Instead of HIGH-LEVEL
+   * ('ProfileContext') to depend on
+   * the LOW-LEVEL ('CookiesContext'),
    * we want to reverse the dependency,
-   * and have the high-level
-   * ('ProfileContext') depends on
+   * and have HIGH-LEVEL
+   * ('ProfileContext') to depend on
    * the newly introduced abstraction
    * ('GenericStorageInterface').
    */
@@ -103,12 +109,16 @@ const cookiesFactory = name => {
   /**
    * @type {GenericStorageInterface<T>}
    */
-  const generic = genericStorageInterface({ save, fetch });
+  const generic = genericStorageInterface({
+    // Good!
+    name,
+    save,
+    fetch,
+  });
 
   return Object.create({
     ...generic,
     context: 'CookiesContext',
-    cookie_name: name,
   });
 };
 
@@ -131,16 +141,19 @@ const cookiesFactory = name => {
  * HIGH-LEVEL
  *
  * 'ProfileContext' no longer depends
- * on the low-level, but it now depends
- * on the abstraction
- * ('GenericStorageInterface').
+ * on the LOW-LEVEL, but it now depends
+ * on the abstraction.
+ * ('GenericStorageInterface')
  *
  * @function
  * @param {GenericStorageInterface<ProfileData>} storage
  * @returns {ProfileContext}
  */
 const profileFactory = storage => {
-  const { save, fetch } = storage;
+  // Given 'storage' is no longer
+  // specific, but abstract!
+  const { save, fetch } = storage; // Good!
+
   return Object.create({
     context: 'ProfileContext',
     save,
@@ -150,15 +163,15 @@ const profileFactory = storage => {
 
 {
   /** @type {CookiesContext<ProfileData>} */
-  const cookies = cookiesFactory('profile');
+  const storage = cookiesFactory('profile');
 
   /** @type {ProfileContext} */
-  const profile = profileFactory(cookies);
+  const profile = profileFactory(storage);
   profile.save({ name: 'Joe', age: 10 });
 
-  // You can simplify the call
-  // by using 'compose' of Ramda.
-
+  // TODO:
+  // Use 'compose' to make it simpler:
+  //
   // R.compose(
   //   profileFactory,
   //   cookiesFactory,

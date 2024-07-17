@@ -1,12 +1,14 @@
 # 2-3. SOLID Principles in React examples
 
-Let's understand SOLID principles with code examples written in React.
+Examples on React should help those who write React codes.
 
 ## (1) Single Responsibility Principle (SRP)
 
+### ■ Description
+
 There should be only one reason to change a module.  
 For instance, you fixed a part in your module which manages A.  
-Yet, you found out it impacted another part in the module which manages B.  
+Yet, you found out it impacted another part of the module which manages B.  
 If such the case, then you are violating SRP (Single Responsibility Principle).
 
 ### ■ Solution
@@ -15,7 +17,7 @@ Split the jobs into different modules.
 
 ### BAD
 
-Responsible for too much actions!!
+The bellow component handles too many things at once:
 
 ```jsx
 const Payments = () => {
@@ -33,7 +35,7 @@ const Payments = () => {
 
 ### GOOD
 
-Split the role!
+Introduce a new component to split roles:
 
 ```jsx
 const Payment = ({ payment } => (
@@ -43,7 +45,7 @@ const Payment = ({ payment } => (
   </div>
 );
 
-// Split the role!
+// Ask 'Payment' to handle the visuals.
 const Payments = () => {
   const payments = await fetchPayments();
   return <div>
@@ -56,6 +58,8 @@ const Payments = () => {
 
 ## (2) Open-Closed Principle (OCP)
 
+### ■ Description
+
 A module should be open for extension, but should be closed for modification.  
 In another word, you should not bring in any breaking changes.
 
@@ -66,7 +70,9 @@ you should add a new mechanism.
 
 ### BEFORE
 
-For the following, pass `discount`.
+#### Assignment
+
+> For the following, pass `discount`.
 
 ```jsx
 const Price = ({ price }) => (
@@ -85,8 +91,10 @@ const Product = product => (
 
 ### BAD
 
+Don't you dare change existing codes.
+
 ```jsx
-// Don't modify the existing component!!
+// Avoid modifying existing components
 const Price = ({ price, discount }) => (
   <div>
     <div>{price} JPY</div>
@@ -107,8 +115,11 @@ const Product = product => (
 
 ### GOOD
 
+Instead of bringing in a breaking change to  
+the existing components, add a new component.
+
 ```jsx
-// Create a new component instead!!
+// A new component (1)
 const DiscountPrice = ({ price, discount }) => (
   <div>
     <Price price={price} />
@@ -116,6 +127,7 @@ const DiscountPrice = ({ price, discount }) => (
   </div>
 );
 
+// A new component (2)
 const Price = ({ price }) => <div>{price} JPY</div>;
 
 const Product = ({ product }) => (
@@ -131,10 +143,12 @@ const Product = ({ product }) => (
 
 ## (3) Liskov Substitution Principle (LSP)
 
+### ■ Description
+
 > Let P(y) be a property provable about objects y of type A.  
 > Then P(x) should be true for objects x of type B where B is a subtype of A.
 
-Sounds complicated, right?  
+Sounds complicated, doesn't it?  
 Let me break it down for you.
 
 **A** being the "parent".  
@@ -143,18 +157,22 @@ Let's say, the program was working with **A** (parent).
 But, once replaced with **B** (sub-class), it stopped working.  
 If that happens, then **B** (sub-class) is said to violate LCP.
 
-In another word,  
-if you substitute a sub-class for the parent, and breaks,  
+In another word,
+if you substitute a sub-class for the parent, and breaks,
 then the sub-class violates LCP.
 
 ### ■ Solution
 
 Fix the sub-class **B**.  
 Make sure it won't break the behaviors of its super-class **A**.  
-Or, another way would be to introduce a new class **C**  
+Or, another way would be to introduce a new class **C**
 which is the approach taken in the bellow example.
 
 ### BAD
+
+When using `Person` (parent), it works.  
+When using `Developer` (sub-class), it throws an error  
+because you forget to pass `food` in `Developer` component.
 
 ```jsx
 const Person = ({ food, drink, place }) => (
@@ -163,11 +181,9 @@ const Person = ({ food, drink, place }) => (
   </span>
 );
 
-// This will result in error...
 const Developer = ({ drink, place }) => {
   const developerDrink = () => 'coffee';
   return (
-    {/* Are you not passing 'food'? */}
     <Person
       drink={developerDrink}
       place={place}
@@ -187,6 +203,9 @@ const Home = () => {
 
 ### GOOD
 
+Fix `Developer` to not fail.  
+Note, for this time, we are passing `{...props}`.
+
 ```jsx
 const Person = ({ food, drink, place }) => (
   <span>
@@ -194,11 +213,9 @@ const Person = ({ food, drink, place }) => (
   </span>
 );
 
-// Passing the rest!!
 const Developer = ({ drink, place, ...props }) => {
   const developerDrink = () => 'coffee';
   return (
-    {/* We are passing '...props' now */}
     <Person
       drink={developerDrink}
       place={place}
@@ -220,6 +237,8 @@ const Home = () => {
 
 ## (4) Interface Segragation Principle (ISP)
 
+### ■ Description
+
 You should not implement interfaces that are not used.
 
 ### ■ Solution
@@ -228,10 +247,12 @@ Divide your interfaces into smaller modules.
 
 ### BAD
 
+You are passing too many stuff to `Drink`.
+
 ```jsx
 const Drink = ({ data }) => (
   <div>
-    I eat {data.food} and drink {data.drink}.
+    I drink {data.drink}.
   </div>
 );
 
@@ -242,17 +263,18 @@ const Person = () => {
     place: 'home',
   };
 
-  // Avoid passing stuff unused!
   return <Drink data={data} />;
 };
 ```
 
 ### GOOD
 
+Pass only `drink` to `Drink` component.
+
 ```jsx
-const Drink = ({ food, drink }) => (
+const Drink = ({ drink }) => (
   <div>
-    I eat {food} and drink {drink}.
+    I drink {drink}.
   </div>
 );
 
@@ -263,13 +285,14 @@ const Person = () => {
     sleep: 'home',
   };
 
-  // Pass only the stuff being used.
   return <Drink drink={drink} />;
 };
 ```
 
 
 ## (5) Dependency Inversion Principle (DIP)
+
+### ■ Description
 
 HIGH-LEVEL modules should not depend on LOW-LEVEL modules.
 
@@ -280,16 +303,15 @@ In aonther word, depend on an interface rather than a class.
 
 ### BAD
 
-```jsx
-const COOKIE_DAYS = 90;
-const data = { name: 'Joe', age: 10 };
+`Profile` (HIGH-LEVEL) depends on `useCookies` which is too specific.
 
-// Low-level
+```jsx
+// LOW-LEVEL
 const useCookies = key => {
   const write = data => {
     const date = new Date();
     date.setTime(
-      date.getTime() + 24 * 60 * 60 * 1000 * COOKIE_DAYS
+      date.getTime() + 24 * 60 * 60 * 1000 * 90
     );
     document.cookie = [
       `${this.key}=${JSON.string(data)}`,
@@ -300,14 +322,19 @@ const useCookies = key => {
   return [write];
 };
 
-// High-level
+// HIGH-LEVEL
 const Profile = () => {
-  // 'Profile' depends on 'saveCookies'
   const [saveCookies] = useCookies('profile');
   return (
     <div>
       <h1>Profile</h1>
-      <button onClick={() => saveCookies(data)} />
+      <div>
+        <button
+          onClick={() => saveCookies({
+            name: 'Joe',
+            age: 10,
+          })}
+        />
     </div>
   );
 };
@@ -315,25 +342,25 @@ const Profile = () => {
 
 ### GOOD
 
-```jsx
-const data = { name: 'Joe', age: 10 };
+Introduce `useStorage` as a proxy for `useCookies`  
+so that `Profile` (HIGH-LEVEL) will depend on  
+more an abstraction.
 
-// Abstraction
-// Takes a function to execute
-const useStorage = f => {
+```jsx
+// ABSTRACTION
+const useStorage = callback => {
   const save = data => {
-    // ...
-    f(data);
+    callback(data);
   };
   return [save];
 };
 
-// Low-level
+// LOW-LEVEL
 const useCookies = key => {
   const write = data => {
     const date = new Date();
     date.setTime(
-      date.getTime() + 24 * 60 * 60 * 1000 * COOKIE_DAYS
+      date.getTime() + 24 * 60 * 60 * 1000 * 90
     );
     document.cookie = [
       `${this.key}=${JSON.string(data)}`,
@@ -344,16 +371,21 @@ const useCookies = key => {
   return [write];
 };
 
-// High-level
+// HIGH-LEVEL
 const Profile = () => {
-  // Passing 'saveCookies' to 'useStorage'
-  // and it is no longer tightly coupled.
   const [saveCookies] = useCookies('profile');
   const [saveStorage] = useStorage(saveCookies);
   return (
     <div>
       <h1>Profile</h1>
-      <button onClick={() => saveStorage(data)} />
+      <div>
+        <button
+          onClick={() => saveStorage({
+            name: 'Joe',
+            age: 10,
+          })}
+        />
+      </div>
     </div>
   );
 };

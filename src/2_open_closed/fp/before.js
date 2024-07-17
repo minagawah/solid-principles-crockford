@@ -22,10 +22,10 @@
  */
 const productFactory = (price = 0) => {
   /** @private */
-  let _p = price;
+  let _price = price;
 
   /** @type {GetPrice} */
-  const get_price = () => _p;
+  const get_price = () => _price;
 
   return Object.create({ get_price });
 };

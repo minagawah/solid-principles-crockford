@@ -1,20 +1,15 @@
-# 2-1. SOLID Principles with OOP Examples
-
-- [Top](../../README.md)
-- [OOP (Object Oriented Programming) Examples](./oop.md)
-  - [(1) Single Responsibility Principle (SRP)](1_single_responsibility.md)
-  - [(2) Open-Closed Principle (OCP)](2_open_closed.md)
-  - [(3) Liskov Substitution Principle (LSP)](3_liskov_substitution.md)
-  - [(4) Interface Segragation Principle (ISP)](4_interface_segragation.md)
-  - [(5) Dependency Inversion Principle (DIP)](5_dependency_inversion.md)
-- [FP (Functional Programming) Examples](../fp/fp.md)
+# 2-2. SOLID Principles with OOP Examples
 
 ## (3) Liskov Substitution Principle (LSP) with OOP
+
+Or, see the corresponding [FP version.](../fp/3_liskov_substitution.md)
+
+### ■ Description
 
 > Let P(y) be a property provable about objects y of type A.  
 > Then P(x) should be true for objects x of type B where B is a subtype of A.
 
-Sounds complicated, right?  
+Sounds complicated, doesn't it?  
 Let me break it down for you.
 
 **A** being the "parent".  
@@ -23,20 +18,28 @@ Let's say, the program was working with **A** (parent).
 But, once replaced with **B** (sub-class), it stopped working.  
 If that happens, then **B** (sub-class) is said to violate LCP.
 
-In another word,  
-if you substitute a sub-class for the parent, and breaks,  
+In another word,
+if you substitute a sub-class for the parent, and breaks,
 then the sub-class violates LCP.
 
 ### ■ Solution
 
 Fix the sub-class **B**.  
 Make sure it won't break the behaviors of its super-class **A**.  
-Or, another way would be to introduce a new class **C**  
+Or, another way would be to introduce a new class **C**
 which is the approach taken in the bellow example.
 
 ### ■ Examples
 
+If you are in hurry,
+you can [check out the shorter version.](#good_vs_bad)
+
 #### (a) BEFORE
+
+This is a program for managing employees.  
+Although accountants may be good at using Excel sheets,
+often a time, developers are not.  
+You will need to design the program so that it will not break.
 
 ##### Assignment
 
@@ -189,3 +192,79 @@ class Developer extends Person {
 - [3_liskov_substitution/oop/after_good.ts](../../src/3_liskov_substitution/oop/after_good.ts)
   - Or, FP version:  
 [3_liskov_substitution/fp/after_good.js](../../src/3_liskov_substitution/fp/after_good.js)
+
+<a name="good_vs_bad"></a>
+### ■ GOOD vs BAD
+
+To quickly grasp the idea behind, have a look at this shorter version:
+
+#### BAD
+
+An instance of `Developer` class will throw Error when using `excel`.
+
+```js
+class Person {
+  public add(args) {
+    return this.simple_math(args)
+  }
+
+  private simple_math(args): number
+}
+
+class Employee extends Person {
+  public add(args) {
+    return this.excel(args)
+  }
+
+  protected excel(args): number
+}
+
+class Developer extends Employee {
+  // Error when using 'excel'
+  protected excel(args) {
+    throw new Error('Error!')
+  }
+}
+```
+
+#### GOOD
+
+Fix `Developer` class to derive from `Person` class (instead of `Employee` class).
+
+```js
+class Person {
+  public add(args) {
+    return this.simple_math(args)
+  }
+
+  private simple_math(args): number
+}
+
+class Employee extends Person {
+  public add(args) {
+    return this.excel(args)
+  }
+
+  protected excel(args): number
+}
+
+class Developer extends Person {
+  // No more error!
+  public add(args) {
+    return this.programming(args)
+  }
+
+  private programming(args): number
+}
+```
+
+Do you see how they differ?
+
+- [Top](../../README.md)
+- [OOP (Object Oriented Programming) Examples](./index.md)
+  - [(1) Single Responsibility Principle (SRP)](1_single_responsibility.md)
+  - [(2) Open-Closed Principle (OCP)](2_open_closed.md)
+  - [(3) Liskov Substitution Principle (LSP)](3_liskov_substitution.md)
+  - [(4) Interface Segragation Principle (ISP)](4_interface_segragation.md)
+  - [(5) Dependency Inversion Principle (DIP)](5_dependency_inversion.md)
+- [FP (Functional Programming) Examples](../fp/index.md)

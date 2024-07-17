@@ -1,15 +1,10 @@
 # 2-1. SOLID Principles with FP Examples
 
-- [Top](../../README.md)
-- [OOP (Object Oriented Programming) Examples](../oop/oop.md)
-- [FP (Functional Programming) Examples](./fp.md)
-  - [(1) Single Responsibility Principle (SRP)](1_single_responsibility.md)
-  - [(2) Open-Closed Principle (OCP)](2_open_closed.md)
-  - [(3) Liskov Substitution Principle (LSP)](3_liskov_substitution.md)
-  - [(4) Interface Segragation Principle (ISP)](4_interface_segragation.md)
-  - [(5) Dependency Inversion Principle (DIP)](5_dependency_inversion.md)
-
 ## (2) Open-Closed Principle (OCP) with FP
+
+Or, see the corresponding [OOP version.](../oop/2_open_closed.md)
+
+### ■ Description
 
 A module should be open for extension, but should be closed for modification.  
 In another word, you should not bring in any breaking changes.
@@ -21,11 +16,17 @@ you should add a new mechanism.
 
 ### ■ Examples
 
+If you are in hurry,
+you can [check out the shorter version.](#good_vs_bad)
+
 #### (a) BEFORE
+
+This is a program for managing product's price.  
+For this time, you will need to apply a discount.
 
 ##### Assignment
 
-> Fix the code so that you can apply a discount on 'price'.
+> Fix the code so that you can apply a discount on `price`.
 > How would you do?
 
 ```js
@@ -33,8 +34,8 @@ you should add a new mechanism.
  * @returns {ProductContext}
  */
 const productFactory = (price = 0) => {
-  let p = price;
-  const get_price = () =>  p;
+  let _price = price;
+  const get_price = () =>  _price;
   return Object.create({ get_price });
 };
 
@@ -59,12 +60,13 @@ You see a BAD example bellow:
  * @returns {ProductContext}
  */
 const productFactory = (price = 0) => {
-  let p = price;
+  let _price = price;
 
-  // Breaking change!
+  // Why bringing in
+  // changes?
   const get_price = (discount = 0) => {
-    p -= discount;
-    return p;
+    _price -= discount;
+    return _price;
   };
 
   return Object.create({ get_price });
@@ -95,14 +97,14 @@ you added `apply_discount`.
  * @returns {ProductContext}
  */
 const productFactory = (price = 0) => {
-  let p = price;
+  let _price = price;
 
-  const get_price = () => p;
+  const get_price = () => _price;
 
   // A method dedicated for the feature.
   const apply_discount = (discount = 0) => {
-    p -= discount;
-    return p;
+    _price -= discount;
+    return _price;
   };
 
   return Object.create({
@@ -110,7 +112,6 @@ const productFactory = (price = 0) => {
     apply_discount,
   });
 };
-
 
 {
   const product = productFactory(100);
@@ -123,3 +124,64 @@ const productFactory = (price = 0) => {
 - [2_open_closed/fp/after_good.js](../../src/2_open_closed/fp/after_good.js)
   - Or, OOP version:  
 [2_open_closed/oop/after_good.ts](../../src/2_open_closed/oop/after_good.ts)
+
+<a name="good_vs_bad"></a>
+### ■ GOOD vs BAD
+
+To quickly grasp the idea behind, have a look at this shorter version:
+
+#### BAD
+
+You are breaking `get_price`.
+
+```js
+const productFactory = (price = 0) => {
+  let _price = price
+
+  // Why bringing in
+  // changes?
+  const get_price = (discount = 0) => {
+    _price -= discount
+    return _price
+  }
+
+  return Object.create({
+    get_price,
+  })
+}
+```
+
+#### GOOD
+
+Add a new method, `apply_discount` instead.
+
+```js
+const productFactory = (price = 0) => {
+  let _price = price
+
+  const get_price = () => _price
+
+  // New method!
+  const apply_discount = (discount = 0) => {
+    _price -= discount
+    return _price
+  };
+
+  return Object.create({
+    get_price,
+    apply_discount
+  })
+}
+```
+
+Do you see how they differ?
+
+- [Top](../../README.md)
+- [OOP (Object Oriented Programming) Examples](../oop/index.md)
+- [FP (Functional Programming) Examples](./index.md)
+  - [(1) Single Responsibility Principle (SRP)](1_single_responsibility.md)
+  - [(2) Open-Closed Principle (OCP)](2_open_closed.md)
+  - [(3) Liskov Substitution Principle (LSP)](3_liskov_substitution.md)
+  - [(4) Interface Segragation Principle (ISP)](4_interface_segragation.md)
+  - [(5) Dependency Inversion Principle (DIP)](5_dependency_inversion.md)
+

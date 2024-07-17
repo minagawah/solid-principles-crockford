@@ -22,6 +22,7 @@ const COOKIE_DAYS = 90;
  * @typedef CookiesContext
  * @type {Object}
  * @property {string} context
+ * @property {string} name
  * @property {Save<T>} save
  * @property {Fetch<T>} fetch
  */
@@ -35,7 +36,9 @@ const COOKIE_DAYS = 90;
  * @returns {CookiesContext<T>}
  */
 const cookiesFactory = name => {
-  /** @type {Save<T>} */
+  /**
+   * @type {Save<T>}
+   */
   const save = data => {
     const d = new Date();
     d.setTime(
@@ -48,7 +51,9 @@ const cookiesFactory = name => {
     ].join('; ');
   };
 
-  /** @type {Fetch<T>} */
+  /**
+   * @type {Fetch<T>}
+   */
   const fetch = () => {
     const match = `${name}=`;
     const arr = document.cookie.split('');
@@ -66,7 +71,7 @@ const cookiesFactory = name => {
 
   return Object.create({
     context: 'CookiesContext',
-    cookie_name: name,
+    name,
     save,
     fetch,
   });
@@ -83,6 +88,7 @@ const cookiesFactory = name => {
  * @typedef ProfileContext
  * @type {Object}
  * @property {string} context
+ * @property {string} name
  * @property {Save<ProfileData>} save
  * @property {Fetch<ProfileData>} fetch
  */
@@ -90,33 +96,32 @@ const cookiesFactory = name => {
 /**
  * HIGH-LEVEL
  *
+ * As DIP (Dependency Inversion
+ * Principle) suggests, we should avoid
+ * having the HIGH-LEVEL component
+ * ('ProfileContext') to depend on
+ * the LOW-LEVEL ('CookiesContext').
+ *
  * @function
+ * @param {CookiesContext<ProfileData>} cookies
  * @returns {ProfileContext}
  */
-const profileFactory = () => {
-  /**
-   * As DIP (Dependency Inversion
-   * Principle) suggests, we should
-   * avoid having the high-level
-   * component ('ProfileContext')
-   * to depend on the low- level
-   * ('CookiesContext').
-   *
-   * @type {CookiesContext<ProfileData>}
-   */
-  const cookies = cookiesFactory('profile');
-  const { save, fetch } = cookies;
+const profileFactory = cookies => {
+  // Given 'cookies' is too specific!
+  const { save, fetch } = cookies; // No!!!
 
   return Object.create({
     context: 'ProfileContext',
-    cookies_name: name,
     save,
     fetch,
   });
 };
 
 {
+  /** @type {CookiesContext<ProfileData>} */
+  const cookies = cookiesFactory('profile');
+
   /** @type {ProfileContext} */
-  const profile = profileFactory();
+  const profile = profileFactory(cookies);
   profile.save({ name: 'Joe', age: 10 });
 }

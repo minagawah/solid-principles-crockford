@@ -1,20 +1,15 @@
 # 2-1. SOLID Principles with FP Examples
 
-- [Top](../../README.md)
-- [OOP (Object Oriented Programming) Examples](../oop/oop.md)
-- [FP (Functional Programming) Examples](./fp.md)
-  - [(1) Single Responsibility Principle (SRP)](1_single_responsibility.md)
-  - [(2) Open-Closed Principle (OCP)](2_open_closed.md)
-  - [(3) Liskov Substitution Principle (LSP)](3_liskov_substitution.md)
-  - [(4) Interface Segragation Principle (ISP)](4_interface_segragation.md)
-  - [(5) Dependency Inversion Principle (DIP)](5_dependency_inversion.md)
-
 ## (3) Liskov Substitution Principle (LSP) with FP
+
+Or, see the corresponding [OOP version.](../oop/3_liskov_substitution.md)
+
+### ■ Description
 
 > Let P(y) be a property provable about objects y of type A.  
 > Then P(x) should be true for objects x of type B where B is a subtype of A.
 
-Sounds complicated, right?  
+Sounds complicated, doesn't it?  
 Let me break it down for you.
 
 **A** being the "parent".  
@@ -23,20 +18,28 @@ Let's say, the program was working with **A** (parent).
 But, once replaced with **B** (sub-class), it stopped working.  
 If that happens, then **B** (sub-class) is said to violate LCP.
 
-In another word,  
-if you substitute a sub-class for the parent, and breaks,  
+In another word,
+if you substitute a sub-class for the parent, and breaks,
 then the sub-class violates LCP.
 
 ### ■ Solution
 
 Fix the sub-class **B**.  
 Make sure it won't break the behaviors of its super-class **A**.  
-Or, another way would be to introduce a new class **C**  
+Or, another way would be to introduce a new class **C**
 which is the approach taken in the bellow example.
 
 ### ■ Examples
 
+If you are in hurry,
+you can [check out the shorter version.](#good_vs_bad)
+
 #### (a) BEFORE
+
+This is a program for managing employees.  
+Although accountants may be good at using Excel sheets,
+often a time, developers are not.  
+You will need to design the program so that it will not break.
 
 ##### Assignment
 
@@ -221,3 +224,82 @@ const developerFactory = () => {
 - [3_liskov_substitution/fp/after_good.js](../../src/3_liskov_substitution/fp/after_good.js)
   - Or, OOP version:  
 [3_liskov_substitution/oop/after_good.ts](../../src/3_liskov_substitution/oop/after_good.ts)
+
+<a name="good_vs_bad"></a>
+### ■ GOOD vs BAD
+
+To quickly grasp the idea behind, have a look at this shorter version:
+
+#### BAD
+
+An instance of `DeveloperContext` will throw Error when using `excel`.
+
+```js
+const personFactory = () => {
+  const simple_math = () => {}
+  return Object.create({
+    add: simple_math
+  })
+}
+
+const employeeFactory = () => {
+  const excel = () => {}
+  const person = personFactory()
+  return Object.create({
+    ...Object.getPrototypeOf(person),
+    add: excel
+  })
+}
+
+const developerFactory = () => {
+  // Error when using 'excel'
+  const excel = () => throw new Error('bad')
+  const person = employeeFactory()
+  return Object.create({
+    ...Object.getPrototypeOf(person),
+    add: excel
+  });
+}
+```
+
+#### GOOD
+
+Fix `DeveloperContext` to derive from `PersonContext` (instead of `EmployeeContext`).
+
+```js
+const personFactory = () => {
+  const simple_math = () => {}
+  return Object.create({
+    add: simple_math
+  })
+}
+
+const employeeFactory = () => {
+  const excel = () => {}
+  const person = personFactory()
+  return Object.create({
+    ...Object.getPrototypeOf(person),
+    add: excel
+  })
+}
+
+const developerFactory = () => {
+  const programming = () => {}
+  const person = personFactory()
+  return Object.create({
+    ...Object.getPrototypeOf(person),
+    add: programming
+  })
+}
+```
+
+Do you see how they differ?
+
+- [Top](../../README.md)
+- [OOP (Object Oriented Programming) Examples](../oop/index.md)
+- [FP (Functional Programming) Examples](./index.md)
+  - [(1) Single Responsibility Principle (SRP)](1_single_responsibility.md)
+  - [(2) Open-Closed Principle (OCP)](2_open_closed.md)
+  - [(3) Liskov Substitution Principle (LSP)](3_liskov_substitution.md)
+  - [(4) Interface Segragation Principle (ISP)](4_interface_segragation.md)
+  - [(5) Dependency Inversion Principle (DIP)](5_dependency_inversion.md)
