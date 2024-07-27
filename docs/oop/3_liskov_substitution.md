@@ -13,7 +13,7 @@ Sounds complicated, doesn't it?
 Let me break it down for you.
 
 **A** being the *"parent"* while **B** being its *"sub-class"*.  
-Let's say, the program was working with **A** (parent).  
+Let's say, the program was working fine when using **A** (parent).  
 However, once replaced with **B** (sub-class), it stopped working.  
 If that happens, then **B** (sub-class) is said to violate LCP.
 
