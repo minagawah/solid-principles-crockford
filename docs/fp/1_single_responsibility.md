@@ -18,7 +18,7 @@ Split the jobs into different modules.
 ### ■ Examples
 
 If you are in hurry,
-you can [check out the shorter version.](#nutshell)
+you can [check out the shorter version.](#shorter_examples)
 
 #### (a) BEFORE
 
@@ -187,8 +187,8 @@ const paymentFactory = () => {
   - Or, OOP version:  
 [1_single_responsibility/oop/after_good.ts](../../src/1_single_responsibility/oop/after_good.ts)
 
-<a name="nutshell"></a>
-### ■ NUTSHELL
+<a name="shorter_examples"></a>
+### ■ SHORTER EXAMPLES
 
 To quickly grasp the idea behind, have a look at this shorter version:
 

@@ -134,7 +134,7 @@ class Developer implements IEmployee, IDeveloper {
 [4_interface_segragation/fp/after_good.js](../../src/4_interface_segragation/fp/after_good.js)
 
 <a name="nutshell"></a>
-### ■ NUTSHELL
+### ■ SHORTER EXAMPLES
 
 To quickly grasp the idea behind, have a look at this shorter version:
 

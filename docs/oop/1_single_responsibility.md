@@ -157,7 +157,7 @@ class Payment {
 [1_single_responsibility/fp/after_good.js](../../src/1_single_responsibility/fp/after_good.js)
 
 <a name="nutshell"></a>
-### ■ NUTSHELL
+### ■ SHORTER EXAMPLES
 
 To quickly grasp the idea behind, have a look at this shorter version:
 
