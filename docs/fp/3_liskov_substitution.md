@@ -12,7 +12,7 @@ Or, see the corresponding [OOP version.](../oop/3_liskov_substitution.md)
 Sounds complicated, doesn't it?  
 Let me break it down for you.
 
-**A** being the "parent". **B** being its "sub-class".  
+**A** being the *"parent"* while **B** being its *"sub-class"*.  
 Let's say, the program was working with **A** (parent).  
 However, once replaced with **B** (sub-class), it stopped working.  
 If that happens, then **B** (sub-class) is said to violate LCP.
@@ -47,9 +47,10 @@ You will need to design the program so that it will not break.
 > With `EmployeeContext` we should be able to create  
 > `accountant` instance.
 >  
-> Also, create `DeveloperContext` using which we would be  
-> able to create `developer` who may be terrible at Excel,  
-> but good at other means for calculating numbers.
+> Also, implement `DeveloperContext` with which  
+> we are creating `developer` who sucks at Excel,  
+> but good at coming up with different ideas  
+> to calculate numbers.
 
 ```js
 /**
