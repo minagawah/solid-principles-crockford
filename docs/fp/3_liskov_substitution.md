@@ -12,10 +12,9 @@ Or, see the corresponding [OOP version.](../oop/3_liskov_substitution.md)
 Sounds complicated, doesn't it?  
 Let me break it down for you.
 
-**A** being the "parent".  
-**B** being its "sub-class".  
+**A** being the "parent". **B** being its "sub-class".  
 Let's say, the program was working with **A** (parent).  
-But, once replaced with **B** (sub-class), it stopped working.  
+However, once replaced with **B** (sub-class), it stopped working.  
 If that happens, then **B** (sub-class) is said to violate LCP.
 
 In another word,
@@ -37,8 +36,7 @@ you can [check out the shorter version.](#shorter_examples)
 #### (a) BEFORE
 
 This is a program for managing employees.  
-Although accountants may be good at using Excel sheets,
-often a time, developers are not.  
+While accountants are good at using Excel sheets, often a time, developers are not.  
 You will need to design the program so that it will not break.
 
 ##### Assignment

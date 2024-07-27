@@ -22,7 +22,7 @@ you can [check out the shorter version.](#nutshell)
 #### (a) BEFORE
 
 This is a program for managing product's price.  
-For this time, you will need to apply a discount.
+For this time, you are applying a discount.
 
 ##### Assignment
 

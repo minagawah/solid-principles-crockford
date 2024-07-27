@@ -224,8 +224,7 @@ const paymentFactory = () => {
 
 #### GOOD
 
-Split them into different contexts so that  
-your change will not affect others.
+Split them into different contexts so that your fix will not affect others.
 
 ```js
 // Split #1
