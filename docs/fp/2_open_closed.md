@@ -17,7 +17,7 @@ you should add a new mechanism.
 ### ■ Examples
 
 If you are in hurry,
-you can [check out the shorter version.](#good_vs_bad)
+you can [check out the shorter version.](#nutshell)
 
 #### (a) BEFORE
 
@@ -125,8 +125,8 @@ const productFactory = (price = 0) => {
   - Or, OOP version:  
 [2_open_closed/oop/after_good.ts](../../src/2_open_closed/oop/after_good.ts)
 
-<a name="good_vs_bad"></a>
-### ■ GOOD vs BAD
+<a name="nutshell"></a>
+### ■ NUTSHELL
 
 To quickly grasp the idea behind, have a look at this shorter version:
 

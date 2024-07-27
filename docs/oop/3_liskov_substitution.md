@@ -32,7 +32,7 @@ which is the approach taken in the bellow example.
 ### ■ Examples
 
 If you are in hurry,
-you can [check out the shorter version.](#good_vs_bad)
+you can [check out the shorter version.](#nutshell)
 
 #### (a) BEFORE
 
@@ -193,8 +193,8 @@ class Developer extends Person {
   - Or, FP version:  
 [3_liskov_substitution/fp/after_good.js](../../src/3_liskov_substitution/fp/after_good.js)
 
-<a name="good_vs_bad"></a>
-### ■ GOOD vs BAD
+<a name="nutshell"></a>
+### ■ NUTSHELL
 
 To quickly grasp the idea behind, have a look at this shorter version:
 

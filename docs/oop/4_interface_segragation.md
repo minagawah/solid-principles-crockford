@@ -15,7 +15,7 @@ Divide your interfaces into smaller modules.
 ### ■ Examples
 
 If you are in hurry,
-you can [check out the shorter version.](#good_vs_bad)
+you can [check out the shorter version.](#nutshell)
 
 #### (a) BEFORE
 
@@ -133,8 +133,8 @@ class Developer implements IEmployee, IDeveloper {
   - Or, FP version:  
 [4_interface_segragation/fp/after_good.js](../../src/4_interface_segragation/fp/after_good.js)
 
-<a name="good_vs_bad"></a>
-### ■ GOOD vs BAD
+<a name="nutshell"></a>
+### ■ NUTSHELL
 
 To quickly grasp the idea behind, have a look at this shorter version:
 

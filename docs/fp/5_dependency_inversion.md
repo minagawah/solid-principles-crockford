@@ -16,7 +16,7 @@ In aonther word, depend on an interface rather than a class.
 ### ■ Examples
 
 If you are in hurry,
-you can [check out the shorter version.](#good_vs_bad)
+you can [check out the shorter version.](#nutshell)
 
 #### (a) BEFORE
 
@@ -273,8 +273,8 @@ on the abstraction (`GenericStorageInterface`).
 [5_dependency_inversion/oop/after_good.ts](../../src/5_dependency_inversion/oop/after_good.ts)
 
 
-<a name="good_vs_bad"></a>
-### ■ GOOD vs BAD
+<a name="nutshell"></a>
+### ■ NUTSHELL
 
 To quickly grasp the idea behind, have a look at this shorter version:
 

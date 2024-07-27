@@ -32,7 +32,7 @@ which is the approach taken in the bellow example.
 ### ■ Examples
 
 If you are in hurry,
-you can [check out the shorter version.](#good_vs_bad)
+you can [check out the shorter version.](#nutshell)
 
 #### (a) BEFORE
 
@@ -225,8 +225,8 @@ const developerFactory = () => {
   - Or, OOP version:  
 [3_liskov_substitution/oop/after_good.ts](../../src/3_liskov_substitution/oop/after_good.ts)
 
-<a name="good_vs_bad"></a>
-### ■ GOOD vs BAD
+<a name="nutshell"></a>
+### ■ NUTSHELL
 
 To quickly grasp the idea behind, have a look at this shorter version:
 

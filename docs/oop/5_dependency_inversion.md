@@ -16,7 +16,7 @@ In aonther word, depend on an interface rather than a class.
 ### ■ Examples
 
 If you are in hurry,
-you can [check out the shorter version.](#good_vs_bad)
+you can [check out the shorter version.](#nutshell)
 
 #### (a) BEFORE
 
@@ -279,8 +279,8 @@ but it now depends on the abstraction (`GenericStorage`).
   - Or, FP version:  
 [5_dependency_inversion/fp/after_good.js](../../src/5_dependency_inversion/fp/after_good.js)
 
-<a name="good_vs_bad"></a>
-### ■ GOOD vs BAD
+<a name="nutshell"></a>
+### ■ NUTSHELL
 
 To quickly grasp the idea behind, have a look at this shorter version:
 

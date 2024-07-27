@@ -17,7 +17,7 @@ you should add a new mechanism.
 ### ■ Examples
 
 If you are in hurry,
-you can [check out the shorter version.](#good_vs_bad)
+you can [check out the shorter version.](#nutshell)
 
 #### (a) BEFORE
 
@@ -121,8 +121,8 @@ class Product {
 [2_open_closed/fp/after_good.js](../../src/2_open_closed/fp/after_good.js)
 
 
-<a name="good_vs_bad"></a>
-### ■ GOOD vs BAD
+<a name="nutshell"></a>
+### ■ NUTSHELL
 
 To quickly grasp the idea behind, have a look at this shorter version:
 

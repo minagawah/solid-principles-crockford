@@ -18,7 +18,7 @@ Split the jobs into different modules.
 ### ■ Examples
 
 If you are in hurry,
-you can [check out the shorter version.](#good_vs_bad)
+you can [check out the shorter version.](#nutshell)
 
 #### (a) BEFORE
 
@@ -156,8 +156,8 @@ class Payment {
   - Or, FP version:  
 [1_single_responsibility/fp/after_good.js](../../src/1_single_responsibility/fp/after_good.js)
 
-<a name="good_vs_bad"></a>
-### ■ GOOD vs BAD
+<a name="nutshell"></a>
+### ■ NUTSHELL
 
 To quickly grasp the idea behind, have a look at this shorter version:
 
